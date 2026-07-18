@@ -1863,8 +1863,10 @@ function applyResultLang(lang) {
   document.querySelectorAll('.result-content').forEach(function(box) {
     var zhEl = box.querySelector('.lang-zh');
     var enEl = box.querySelector('.lang-en');
-    if (zhEl) zhEl.style.display = (lang === 'zh') ? '' : 'none';
-    if (enEl) enEl.style.display = (lang === 'en') ? '' : 'none';
+    // 必须用显式 'block'/'none'，否则 '' 会回退到 CSS 的 body.show-zh/.show-en 规则，
+    // 导致默认中文页下 .lang-en 被强制隐藏、点 EN 无效。
+    if (zhEl) zhEl.style.display = (lang === 'zh') ? 'block' : 'none';
+    if (enEl) enEl.style.display = (lang === 'en') ? 'block' : 'none';
   });
 }
 
